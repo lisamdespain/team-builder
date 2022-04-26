@@ -24,7 +24,7 @@ export default function Form(props){
               type="text"
               name="name"
               placeholder="Type a name"
-              value={values.name}
+              value={props.values.name}
               onChange={onChange}
               maxLength="30"
             />
@@ -36,7 +36,7 @@ export default function Form(props){
               type="email"
               name="email"
               placeholder="Enter their email"
-              value={values.email}
+              value={props.values.email}
               onChange={onChange}
             />
         </label>
@@ -44,7 +44,7 @@ export default function Form(props){
        
         <label>Role
          
-          <select value={values.role} name="role" onChange={onChange}>
+          <select value={props.values.role} name="role" onChange={onChange}>
           <option value="">--Select a role--</option>
           <option value="Designer">Designer</option>
           <option value="Full Stack Developer">Full Stack Developer</option>

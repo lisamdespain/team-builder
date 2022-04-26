@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import './App.css';
-import Form from "./Form";
-import axios from 'axios';
+import Form from "./components/Form";
+// import axios from 'axios';
 
 const initialFormValues = {
   name: "",
@@ -10,45 +10,34 @@ const initialFormValues = {
 }
 
 function App() {
-  // useState to add values to the form
+  // useState to add values to the form: team members and form values
   const [teamMember, setTeamMember] = useState([]);
   const [formValues, setFormValues] = useState(initialFormValues);
-  const [formError, setFormError] = useState("");
+  
   const updateForm = (inputName, inputValue) => {
     setFormValues({...formValues, [inputName]: inputValue});
   }
 
   const submitForm = () => {
-    
-    const newTeamMember = {
-      name: formValues.name.trim(),
-      email: formValues.email.trim(),
-      role: formValues.role
+    setTeamMember([formValues, ...teamMember]);
+    setFormValues(initialFormValues);
     }
-
-  if (!newTeamMember.name || !newTeamMember.email || !newTeamMember.role) return
-    setFormError("Please enter all the info requested before hitting submit.");
-    axios.post("fakeapi.com", newTeamMember)
-    .then(res => {
-      setTeamMember([res.data, ...teamMember])
-      setFormValues(initialFormValues)
-    }).catch(err => console.error(err))
-  }
-
-  useEffect(() => {
-    axios.get('fakeapi.com').then(res => setTeamMember(res.data))
-  }, [])
+  
+  
+ 
   return (
-    <div className="App">
-      <header className="App-header">Team Members
-      {formError && <h2>{formError}</h2>}
-      </header>
+    <div>
+      <h1>Team Members</h1>
       <Form
         values={formValues}
         update={updateForm}
         submit={submitForm}
       />
-
+{teamMember.map((member, idx) => {
+  return (
+    <div key={idx}>{member.name}, {member.email}, {member.role}</div>
+  )
+})}
     </div>
   );
 }
